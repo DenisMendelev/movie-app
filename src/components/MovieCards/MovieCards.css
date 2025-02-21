@@ -1,0 +1,204 @@
+/* Header.css или MovieCards.css */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1010px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.movie-list-wrapper {
+  width: 100%;
+}
+
+.movie-list-container {
+  width: 100%;
+  max-width: 1010px;
+  margin: 0 auto;
+  min-width: 1010px;
+}
+
+.movie-grid {
+  display: flex;
+  justify-content: space-between; /* Распределяем карточки по ширине */
+  width: 100%;
+  min-width: 1010px; /* Десктопная минимальная ширина */
+}
+
+.movie-grid.ant-list .ant-list-item {
+  width: 450px; /* Фиксированная ширина каждой карточки для десктопа */
+  height: 280px; /* Фиксированная высота каждой карточки */
+}
+
+.movie-grid.ant-list .ant-list-item:nth-child(1) {
+  margin-right: auto; /* Для одной карточки в "Rated" — выравнивание слева */
+}
+
+.movie-grid.ant-list .ant-list-item:only-child {
+  margin-left: 0; /* Убеждаемся, что единственная карточка в "Rated" выравнивается слева */
+}
+
+.ant-card .ant-card-body {
+  padding: 0;
+}
+
+.movie-card {
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 450px; /* Фиксированная ширина карточки для десктопа */
+  height: 280px; /* Фиксированная высота карточки для десктопа */
+}
+
+.movie-card:hover {
+  border: 2px solid #1890ff;
+}
+
+.movie-card-content {
+  display: flex;
+  flex-direction: row;
+  height: 100%; /* Занимает всю высоту карточки */
+}
+
+.movie-poster {
+  flex: 0 0 180px; /* Постер занимает 180px ширины для десктопа */
+  overflow: hidden;
+  height: 100%; /* Занимает всю высоту карточки */
+}
+
+.movie-content {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  width: 270px; /* Текстовая часть занимает 270px ширины для десктопа */
+  height: 100%; /* Занимает всю высоту карточки */
+}
+
+.movie-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.movie-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+}
+
+.movie-rating-circle {
+  background-color: #e9d100; /* Желтый по умолчанию, будет переопределен через JS */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.movie-release,
+.movie-genres {
+  margin: 0 0 8px;
+  color: #666;
+}
+
+.movie-description {
+  margin: 0 0 8px;
+  color: #333;
+  line-height: 1.5;
+  flex: 1; /* Занимает доступное пространство для описания */
+  overflow: hidden; /* Обрезает текст, если превышает высоту */
+}
+
+.movie-stars {
+  margin-top: auto; /* Размещает звезды внизу */
+}
+
+.movie-rate {
+  font-size: 16px;
+  color: #ffd700;
+}
+
+@media (max-width: 600px) {
+  .app-container {
+    max-width: 420px; /* Мобильная ширина контейнера */
+    padding: 10px; /* Уменьшаем отступы для мобильной версии */
+  }
+
+  .movie-list-container {
+    max-width: 420px; /* Мобильная ширина контейнера */
+    min-width: 420px; /* Фиксируем минимальную ширину для мобильной версии */
+  }
+
+  .movie-grid {
+    min-width: 420px; /* Мобильная минимальная ширина */
+    justify-content: center; /* Центрируем карточки в одной колонке */
+  }
+
+  .movie-grid.ant-list .ant-list-item {
+    width: 420px; /* Уменьшаем ширину карточек для мобильной версии */
+    height: 260px; /* Уменьшаем высоту для мобильной версии, если нужно */
+  }
+
+  .movie-card {
+    width: 420px; /* Фиксированная ширина карточки для мобильной версии */
+    height: 260px; /* Фиксированная высота карточки для мобильной версии */
+  }
+
+  .movie-card-content {
+    flex-direction: column; /* Переключаем на вертикальную компоновку для мобильной версии */
+  }
+
+  .movie-poster {
+    flex: 0 0 420px; /* Постер занимает всю ширину карточки для мобильной версии */
+    height: 250px; /* Уменьшаем высоту постера для мобильной версии */
+  }
+
+  .movie-poster-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0; /* Закругление всех верхних углов для мобильной версии */
+  }
+
+  .movie-content {
+    width: 100%; /* Текстовая часть занимает всю ширину для мобильной версии */
+    padding: 10px; /* Уменьшаем отступы для мобильной версии */
+  }
+
+  .movie-header {
+    flex-direction: column; /* Переключаем на вертикальную компоновку для мобильной версии */
+    align-items: flex-start; /* Выравниваем текст и рейтинг вверху */
+  }
+
+  .movie-rating-circle {
+    margin-top: 8px; /* Отступ рейтинга под названием для мобильной версии */
+  }
+
+  .movie-title {
+    font-size: 16px; /* Уменьшаем размер текста для мобильной версии */
+  }
+
+  .movie-release,
+  .movie-genres {
+    font-size: 14px; /* Уменьшаем размер текста для мобильной версии */
+  }
+
+  .movie-description {
+    font-size: 14px; /* Уменьшаем размер текста для мобильной версии */
+    height: auto; /* Адаптируем высоту описания */
+  }
+
+  .movie-rate {
+    font-size: 14px; /* Уменьшаем размер звезд для мобильной версии */
+  }
+}
