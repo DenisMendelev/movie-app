@@ -1,6 +1,6 @@
 import React, { useEffect, useState, createContext } from 'react';
 import 'antd/dist/reset.css';
-import { ConfigProvider } from 'antd'; // Добавляем ConfigProvider для стилизации
+import { ConfigProvider } from 'antd';
 import MovieList from '../MovieLists/MovieLists';
 import Header from '../Header/Header';
 import { createGuestSession, fetchGenres } from '../../API/api';
@@ -37,21 +37,21 @@ const App = () => {
       <ConfigProvider
         theme={{
           token: {
-            colorPrimary: '#1890FF', // Фиолетовый для активных элементов, как на макете
+            colorPrimary: '#1890FF',
             borderRadius: 8,
           },
         }}
       >
         <div
-          className="app-container" // Добавляем класс для CSS
+          className="app-container"
           style={{
             display: 'flex',
             flexDirection: 'column',
-            maxWidth: '1010px', // Десктопная ширина
-            margin: '0 auto', // Центрируем весь контент
+            maxWidth: '1010px',
+            margin: '0 auto',
             padding: '20px',
-            backgroundColor: '#f5f5f5', // Светлый фон, как на макете
-            minHeight: '100vh', // Заполняем всю высоту экрана
+            backgroundColor: '#f5f5f5',
+            minHeight: '100vh',
           }}
         >
           <Header
@@ -61,7 +61,7 @@ const App = () => {
           />
           <div className="movie-list-wrapper" style={{ width: '100%' }}>
             {' '}
-            {/* Обеспечиваем фиксированную ширину для MovieList */}
+            {}
             {activeTab === '1' && (
               <MovieList
                 searchQuery={searchQuery}

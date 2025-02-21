@@ -23,26 +23,20 @@ const MovieCards = ({ movie, genres, onRateChange }) => {
       .join(', ');
   };
 
-  // Определяем цвет круга рейтинга по требованиям
   const getRatingColor = (rating) => {
-    if (rating >= 0 && rating < 3) return '#E90000'; // Красный
-    if (rating >= 3 && rating < 5) return '#E97E00'; // Оранжевый
-    if (rating >= 5 && rating < 7) return '#E9D100'; // Желтый
-    if (rating >= 7) return '#66E900'; // Зеленый
-    return '#E9D100'; // По умолчанию желтый (для 6.9, как на изображении)
+    if (rating >= 0 && rating < 3) return '#E90000';
+    if (rating >= 3 && rating < 5) return '#E97E00';
+    if (rating >= 5 && rating < 7) return '#E9D100';
+    if (rating >= 7) return '#66E900';
+    return '#E9D100';
   };
 
-  // Преобразуем рейтинг из 0-10 (TMDB) в 0-5 (для Rate)
   const starRating = movie.vote_average
     ? Math.round(movie.vote_average / 2)
     : 0;
 
   return (
-    <Card
-      hoverable
-      className="movie-card" // Добавляем класс для CSS
-      cover={null} // Уберем стандартный cover, чтобы настроить постер вручную
-    >
+    <Card hoverable className="movie-card" cover={null}>
       <div className="movie-card-content">
         <div className="movie-poster">
           <img
@@ -75,9 +69,9 @@ const MovieCards = ({ movie, genres, onRateChange }) => {
             <Rate
               allowHalf
               defaultValue={starRating}
-              onChange={(value) => onRateChange(movie.id, value * 2)} // Преобразуем обратно в 0-10 для API
+              onChange={(value) => onRateChange(movie.id, value * 2)}
               className="movie-rate"
-              disabled={false} // Позволяем пользователю изменять рейтинг
+              disabled={false}
             />
           </div>
         </div>

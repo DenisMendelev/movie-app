@@ -44,7 +44,7 @@ const MovieList = ({ searchQuery, guestSessionId, rated = false }) => {
       style={{ width: '100%', maxWidth: '1010px' }}
     >
       {' '}
-      {/* Фиксируем ширину контейнера для десктопа */}
+      {}
       {loading ? (
         <Spin size="large" style={{ display: 'block', margin: '20px auto' }} />
       ) : (
@@ -52,16 +52,16 @@ const MovieList = ({ searchQuery, guestSessionId, rated = false }) => {
           {movies.length > 0 ? (
             <>
               <List
-                className="movie-grid" // Добавляем класс для CSS
+                className="movie-grid"
                 grid={{
                   gutter: 16,
-                  column: 2, // Десктоп: 2 колонки, мобильная версия будет управляться через CSS
-                  xs: 1, // Мобильная версия: 1 колонка
-                  sm: 1, // Мобильная версия: 1 колонка
-                  md: 2, // Таблет: 2 колонки
-                  lg: 2, // Десктоп: 2 колонки
+                  column: 2,
+                  xs: 1,
+                  sm: 1,
+                  md: 2,
+                  lg: 2,
                 }}
-                dataSource={movies} // 6 карточек на страницу
+                dataSource={movies}
                 renderItem={(movie) => (
                   <List.Item
                     className="movie-item"
@@ -79,8 +79,8 @@ const MovieList = ({ searchQuery, guestSessionId, rated = false }) => {
                   justifyContent:
                     rated && movies.length === 1
                       ? 'flex-start'
-                      : 'space-between', // Выравнивание для одной карточки в "Rated"
-                  width: '100%', // Убедимся, что List занимает всю ширину
+                      : 'space-between',
+                  width: '100%',
                 }}
               />
               <div
@@ -94,7 +94,7 @@ const MovieList = ({ searchQuery, guestSessionId, rated = false }) => {
                 <Pagination
                   current={currentPage}
                   total={totalResults}
-                  pageSize={20} // Указываем, что на страницу 6 фильмов
+                  pageSize={20}
                   onChange={handlePageChange}
                   showSizeChanger={false}
                   style={{ display: 'inline-block' }}
