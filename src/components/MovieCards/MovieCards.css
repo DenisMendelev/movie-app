@@ -96,12 +96,15 @@
   border-radius: 50%;
   width: 30px;
   height: 30px;
+  min-width: 30px;
+  min-height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: black;
   font-size: 14px;
   font-weight: bold;
+  line-height: 1;
 }
 
 .movie-release,

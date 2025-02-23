@@ -2,7 +2,8 @@ import React from 'react';
 import { Card, Rate } from 'antd';
 import { format } from 'date-fns';
 import './MovieCards.css';
-const MovieCards = ({ movie, genres, onRateChange }) => {
+
+const MovieCards = ({ movie, genres, onRateChange, userRating }) => {
   const truncateText = (text, maxLength) => {
     if (text.length <= maxLength) return text;
     const truncated = text.slice(0, maxLength);
@@ -31,9 +32,8 @@ const MovieCards = ({ movie, genres, onRateChange }) => {
     return '#E9D100';
   };
 
-  const starRating = movie.vote_average
-    ? Math.round(movie.vote_average / 2)
-    : 0;
+  const starRating =
+    userRating !== undefined ? userRating : movie.vote_average || 0;
 
   return (
     <Card hoverable className="movie-card" cover={null}>
@@ -68,8 +68,9 @@ const MovieCards = ({ movie, genres, onRateChange }) => {
           <div className="movie-stars">
             <Rate
               allowHalf
-              defaultValue={starRating}
-              onChange={(value) => onRateChange(movie.id, value * 2)}
+              count={10}
+              value={starRating}
+              onChange={(value) => onRateChange(movie.id, value)}
               className="movie-rate"
               disabled={false}
             />

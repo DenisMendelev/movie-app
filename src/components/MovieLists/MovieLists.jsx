@@ -9,6 +9,7 @@ const MovieList = ({ searchQuery, guestSessionId, rated = false }) => {
   const [loading, setLoading] = useState(false);
   const [totalResults, setTotalResults] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [userRatings, setUserRatings] = useState({});
   const genres = useContext(GenresContext);
 
   useEffect(() => {
@@ -20,6 +21,16 @@ const MovieList = ({ searchQuery, guestSessionId, rated = false }) => {
           : await fetchMovies(searchQuery, currentPage);
         setMovies(data.results);
         setTotalResults(data.total_results);
+
+        if (rated) {
+          const ratings = {};
+          data.results.forEach((movie) => {
+            if (movie.rating) {
+              ratings[movie.id] = movie.rating;
+            }
+          });
+          setUserRatings(ratings);
+        }
       } catch (error) {
         console.error('Error fetching movies:', error);
       } finally {
@@ -35,7 +46,15 @@ const MovieList = ({ searchQuery, guestSessionId, rated = false }) => {
   };
 
   const handleRateChange = async (movieId, value) => {
-    await rateMovie(guestSessionId, movieId, value);
+    try {
+      await rateMovie(guestSessionId, movieId, value);
+      setUserRatings((prev) => ({
+        ...prev,
+        [movieId]: value,
+      }));
+    } catch (error) {
+      console.error('Error rating movie:', error);
+    }
   };
 
   return (
@@ -43,8 +62,6 @@ const MovieList = ({ searchQuery, guestSessionId, rated = false }) => {
       className="movie-list-container"
       style={{ width: '100%', maxWidth: '1010px' }}
     >
-      {' '}
-      {}
       {loading ? (
         <Spin size="large" style={{ display: 'block', margin: '20px auto' }} />
       ) : (
@@ -71,6 +88,7 @@ const MovieList = ({ searchQuery, guestSessionId, rated = false }) => {
                       movie={movie}
                       genres={genres}
                       onRateChange={handleRateChange}
+                      userRating={userRatings[movie.id]}
                     />
                   </List.Item>
                 )}
