@@ -32,8 +32,7 @@ const MovieCards = ({ movie, genres, onRateChange, userRating }) => {
     return '#E9D100';
   };
 
-  const starRating =
-    userRating !== undefined ? userRating : movie.vote_average || 0;
+  const starRating = userRating !== undefined ? userRating : 0;
 
   return (
     <Card hoverable className="movie-card" cover={null}>

@@ -1,15 +1,21 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { List, Spin, Pagination, Alert } from 'antd';
 import MovieCards from '../MovieCards/MovieCards';
-import { fetchMovies, getRatedMovies, rateMovie } from '../../API/api';
+import { fetchMovies, getRatedMovies } from '../../API/api';
 import { GenresContext } from '../App/App';
 
-const MovieList = ({ searchQuery, guestSessionId, rated = false }) => {
+const MovieList = ({
+  searchQuery,
+  guestSessionId,
+  rated = false,
+  userRatings,
+  onRateChange,
+  currentPage,
+  onPageChange,
+}) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [totalResults, setTotalResults] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [userRatings, setUserRatings] = useState({});
   const genres = useContext(GenresContext);
 
   useEffect(() => {
@@ -21,16 +27,6 @@ const MovieList = ({ searchQuery, guestSessionId, rated = false }) => {
           : await fetchMovies(searchQuery, currentPage);
         setMovies(data.results);
         setTotalResults(data.total_results);
-
-        if (rated) {
-          const ratings = {};
-          data.results.forEach((movie) => {
-            if (movie.rating) {
-              ratings[movie.id] = movie.rating;
-            }
-          });
-          setUserRatings(ratings);
-        }
       } catch (error) {
         console.error('Error fetching movies:', error);
       } finally {
@@ -40,22 +36,6 @@ const MovieList = ({ searchQuery, guestSessionId, rated = false }) => {
 
     getMovies();
   }, [searchQuery, currentPage, rated, guestSessionId]);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  const handleRateChange = async (movieId, value) => {
-    try {
-      await rateMovie(guestSessionId, movieId, value);
-      setUserRatings((prev) => ({
-        ...prev,
-        [movieId]: value,
-      }));
-    } catch (error) {
-      console.error('Error rating movie:', error);
-    }
-  };
 
   return (
     <div
@@ -87,7 +67,7 @@ const MovieList = ({ searchQuery, guestSessionId, rated = false }) => {
                     <MovieCards
                       movie={movie}
                       genres={genres}
-                      onRateChange={handleRateChange}
+                      onRateChange={onRateChange}
                       userRating={userRatings[movie.id]}
                     />
                   </List.Item>
@@ -113,7 +93,7 @@ const MovieList = ({ searchQuery, guestSessionId, rated = false }) => {
                   current={currentPage}
                   total={totalResults}
                   pageSize={20}
-                  onChange={handlePageChange}
+                  onChange={onPageChange}
                   showSizeChanger={false}
                   style={{ display: 'inline-block' }}
                 />

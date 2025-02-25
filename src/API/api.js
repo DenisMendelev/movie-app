@@ -45,15 +45,26 @@ export const fetchGenres = async () => {
 
 export const rateMovie = async (guestSessionId, movieId, rating) => {
   try {
-    await axios.post(
+    if (typeof rating !== 'number' || rating < 0.5 || rating > 10) {
+      throw new Error('Rating must be a number between 0.5 and 10.0');
+    }
+
+    const response = await axios.post(
       `${BASE_URL}/movie/${movieId}/rating`,
       { value: rating },
       {
         params: { api_key: API_KEY, guest_session_id: guestSessionId },
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
       }
     );
+    return response.data;
   } catch (error) {
     console.error('Error rating movie:', error);
+    if (error.response) {
+      console.error('API Response:', error.response.data);
+    }
     throw error;
   }
 };
