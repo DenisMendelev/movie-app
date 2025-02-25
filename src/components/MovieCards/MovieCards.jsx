@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Rate } from 'antd';
 import { format } from 'date-fns';
 import './MovieCards.css';
+import NO_POSTER_IMAGE from '../../IMG/no-poster.jpg';
 
 const MovieCards = ({ movie, genres, onRateChange, userRating }) => {
   const truncateText = (text, maxLength) => {
@@ -39,9 +40,16 @@ const MovieCards = ({ movie, genres, onRateChange, userRating }) => {
       <div className="movie-card-content">
         <div className="movie-poster">
           <img
-            alt={movie.title}
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-            className="movie-poster-img"
+            alt={movie.title || 'No poster available'}
+            src={
+              movie.poster_path
+                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                : NO_POSTER_IMAGE
+            }
+            className={`movie-poster-img ${!movie.poster_path ? 'no-poster-img' : ''}`}
+            onError={(e) => {
+              e.target.src = NO_POSTER_IMAGE;
+            }}
           />
         </div>
         <div className="movie-content">
@@ -69,7 +77,7 @@ const MovieCards = ({ movie, genres, onRateChange, userRating }) => {
               allowHalf
               count={10}
               value={starRating}
-              onChange={(value) => onRateChange(movie.id, value)}
+              onChange={(value) => onRateChange(movie.id, value || 0.5)} // Убедимся, что минимум 0.5
               className="movie-rate"
               disabled={false}
             />
